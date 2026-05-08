@@ -1,0 +1,1207 @@
+<!doctype html>
+<html lang="en">
+<head>
+<meta charset="utf-8" />
+<meta name="viewport" content="width=device-width, initial-scale=1, viewport-fit=cover" />
+<title>Kaş Experiences — one place for everything you came here for</title>
+<meta name="description" content="Curated activities in Kaş, Antalya. Book in one place — boat, dive, paraglide, court time, sunset." />
+
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Fraunces:ital,opsz,wght@0,9..144,300..900;1,9..144,300..900&family=General+Sans:wght@400;500;600;700&family=JetBrains+Mono:wght@400;500&display=swap" rel="stylesheet">
+<link href="https://api.fontshare.com/v2/css?f[]=general-sans@400,500,600,700&display=swap" rel="stylesheet">
+
+<style>
+:root {
+  /* Mediterranean palette — Lycian coast */
+  --c-sea-deep: #0a3a4a;        /* deep Lycian water */
+  --c-sea: #1d6e87;             /* mid water */
+  --c-sea-light: #67a8be;       /* shallow turquoise */
+  --c-stone: #f1e9d8;           /* Antalya stone cream */
+  --c-stone-warm: #e8dec7;
+  --c-cream: #faf6ee;
+  --c-sunset: #d6541d;          /* sunset terracotta */
+  --c-amber: #e6a417;           /* paragliding amber */
+  --c-ink: #15171a;             /* near-black, warm */
+  --c-ink-soft: #3b3d40;
+  --c-line: rgba(21,23,26,0.12);
+  --c-line-strong: rgba(21,23,26,0.22);
+
+  /* Telegram WebApp variable fallbacks */
+  --tg-bg: var(--tg-theme-bg-color, var(--c-cream));
+  --tg-text: var(--tg-theme-text-color, var(--c-ink));
+
+  /* Typography */
+  --f-display: 'Fraunces', 'Times New Roman', serif;
+  --f-sans: 'General Sans', system-ui, -apple-system, sans-serif;
+  --f-mono: 'JetBrains Mono', monospace;
+
+  /* Spacing scale */
+  --s-1: 4px; --s-2: 8px; --s-3: 12px; --s-4: 16px; --s-5: 24px;
+  --s-6: 32px; --s-7: 48px; --s-8: 64px; --s-9: 96px; --s-10: 128px;
+
+  --radius-s: 6px;
+  --radius-m: 12px;
+  --radius-l: 22px;
+
+  /* Safe areas (TMA) */
+  --safe-top: env(safe-area-inset-top, 0);
+  --safe-bottom: env(safe-area-inset-bottom, 0);
+}
+
+* { box-sizing: border-box; margin: 0; padding: 0; -webkit-tap-highlight-color: transparent; }
+html, body { background: var(--c-cream); color: var(--c-ink); font-family: var(--f-sans); font-size: 16px; line-height: 1.5; -webkit-font-smoothing: antialiased; }
+body { min-height: 100dvh; padding-bottom: calc(72px + var(--safe-bottom)); overflow-x: hidden; }
+img { max-width: 100%; display: block; }
+button { font: inherit; color: inherit; cursor: pointer; border: 0; background: none; }
+a { color: inherit; text-decoration: none; }
+
+/* Grain overlay — anti-AI texture */
+body::before {
+  content: ''; position: fixed; inset: 0; pointer-events: none; z-index: 9999;
+  background-image: url("data:image/svg+xml,%3Csvg viewBox='0 0 320 320' xmlns='http://www.w3.org/2000/svg'%3E%3Cfilter id='n'%3E%3CfeTurbulence type='fractalNoise' baseFrequency='0.85' numOctaves='3' stitchTiles='stitch'/%3E%3CfeColorMatrix values='0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0.7 0'/%3E%3C/filter%3E%3Crect width='100%25' height='100%25' filter='url(%23n)'/%3E%3C/svg%3E");
+  opacity: 0.06; mix-blend-mode: multiply;
+}
+
+/* ====== Top brand bar (web) + screen switcher ====== */
+.brand-bar {
+  position: sticky; top: 0; z-index: 50;
+  display: flex; align-items: center; justify-content: space-between;
+  padding: calc(12px + var(--safe-top)) 20px 12px;
+  background: var(--c-cream);
+  border-bottom: 1px solid var(--c-line);
+}
+.brand {
+  font-family: var(--f-display);
+  font-weight: 600; font-size: 22px; letter-spacing: -0.02em;
+  display: flex; align-items: baseline; gap: 6px;
+}
+.brand i { font-style: italic; color: var(--c-sunset); }
+.brand-mark {
+  width: 28px; height: 28px; border-radius: 50%;
+  background: radial-gradient(circle at 30% 30%, var(--c-amber), var(--c-sunset) 60%, var(--c-sea-deep));
+  margin-right: 10px;
+}
+.brand-row { display: flex; align-items: center; }
+.locale {
+  font-family: var(--f-mono); font-size: 11px; letter-spacing: 0.08em; text-transform: uppercase;
+  color: var(--c-ink-soft);
+}
+
+/* Bottom tab bar (TMA-style screen switcher) */
+.tabs {
+  position: fixed; left: 12px; right: 12px;
+  bottom: calc(12px + var(--safe-bottom));
+  background: var(--c-ink); color: var(--c-cream);
+  border-radius: 999px; padding: 6px;
+  display: grid; grid-template-columns: repeat(5, 1fr);
+  z-index: 100;
+  box-shadow: 0 18px 40px -12px rgba(10,58,74,0.45), 0 4px 8px rgba(0,0,0,0.1);
+}
+.tab {
+  display: flex; flex-direction: column; align-items: center; justify-content: center;
+  padding: 10px 4px 8px; border-radius: 999px;
+  font-family: var(--f-sans); font-size: 10px; font-weight: 500; letter-spacing: 0.04em;
+  color: rgba(250,246,238,0.65); text-transform: uppercase;
+  transition: background 0.2s, color 0.2s;
+}
+.tab svg { width: 20px; height: 20px; margin-bottom: 4px; }
+.tab[aria-current="true"] { background: var(--c-sunset); color: var(--c-cream); }
+
+/* Screens */
+.screen { display: none; }
+.screen[data-active="true"] { display: block; animation: rise 0.4s cubic-bezier(0.2,0.8,0.2,1); }
+@keyframes rise { from { opacity: 0; transform: translateY(12px); } to { opacity: 1; transform: none; } }
+
+/* ============== HOME / DISCOVER ============== */
+.hero {
+  position: relative; padding: 28px 20px 36px;
+  background: var(--c-stone);
+  overflow: hidden;
+}
+.hero::after {
+  content: ''; position: absolute; right: -40px; top: -40px; width: 220px; height: 220px;
+  background: radial-gradient(circle, var(--c-amber) 0%, transparent 65%);
+  opacity: 0.45; pointer-events: none;
+}
+.hero-eyebrow {
+  font-family: var(--f-mono); font-size: 11px; letter-spacing: 0.18em;
+  text-transform: uppercase; color: var(--c-ink-soft);
+  display: flex; align-items: center; gap: 8px;
+}
+.hero-eyebrow::before { content: ''; width: 16px; height: 1px; background: var(--c-ink-soft); }
+
+.hero-title {
+  font-family: var(--f-display); font-style: italic; font-weight: 400;
+  font-size: clamp(48px, 13vw, 96px);
+  line-height: 0.92; letter-spacing: -0.04em;
+  color: var(--c-ink); margin-top: 14px;
+}
+.hero-title b { font-style: normal; font-weight: 700; color: var(--c-sea-deep); }
+.hero-title em { font-style: italic; color: var(--c-sunset); display: block; }
+
+.hero-meta {
+  margin-top: 20px; display: flex; flex-wrap: wrap; gap: 14px 26px;
+  font-size: 13px; color: var(--c-ink-soft);
+}
+.hero-meta span { display: inline-flex; align-items: center; gap: 6px; }
+.hero-meta b { color: var(--c-ink); font-weight: 600; }
+.hero-meta .dot { width: 6px; height: 6px; border-radius: 50%; background: var(--c-sunset); }
+
+.hero-photo {
+  margin-top: 26px; aspect-ratio: 4 / 5; border-radius: var(--radius-l);
+  background: url('https://images.unsplash.com/photo-1610552050890-fe99536c2615?w=900&auto=format&fit=crop') center/cover, var(--c-sea-deep);
+  position: relative; overflow: hidden;
+  box-shadow: 0 30px 60px -20px rgba(10,58,74,0.4);
+}
+.hero-photo::after {
+  content: ''; position: absolute; inset: 0;
+  background: linear-gradient(180deg, transparent 35%, rgba(10,58,74,0.55) 100%);
+}
+.hero-photo-tag {
+  position: absolute; left: 16px; bottom: 16px; right: 16px; z-index: 2;
+  color: var(--c-cream); display: flex; justify-content: space-between; align-items: flex-end;
+}
+.hero-photo-tag .lbl { font-family: var(--f-display); font-style: italic; font-size: 26px; line-height: 1; }
+.hero-photo-tag .meta { font-family: var(--f-mono); font-size: 10px; letter-spacing: 0.12em; text-transform: uppercase; opacity: 0.85; }
+
+/* Categories strip */
+.cats { padding: 32px 0 8px; }
+.cats h2 {
+  font-family: var(--f-display); font-size: 14px; font-weight: 500;
+  letter-spacing: 0.16em; text-transform: uppercase;
+  color: var(--c-ink-soft); padding: 0 20px; margin-bottom: 14px;
+  display: flex; justify-content: space-between; align-items: center;
+}
+.cats h2 a { font-family: var(--f-mono); font-size: 11px; letter-spacing: 0.1em; color: var(--c-sea); }
+.cats-row { display: flex; gap: 10px; overflow-x: auto; padding: 0 20px 8px; scrollbar-width: none; }
+.cats-row::-webkit-scrollbar { display: none; }
+.cat-chip {
+  flex: 0 0 auto; padding: 16px 18px; border-radius: var(--radius-m);
+  background: var(--c-stone); border: 1px solid transparent;
+  display: flex; flex-direction: column; gap: 8px; min-width: 130px;
+  transition: transform 0.2s, border-color 0.2s;
+}
+.cat-chip:hover { transform: translateY(-2px); border-color: var(--c-line-strong); }
+.cat-chip .ico { font-size: 22px; }
+.cat-chip .nm { font-family: var(--f-display); font-size: 18px; font-weight: 600; letter-spacing: -0.01em; }
+.cat-chip .ct { font-family: var(--f-mono); font-size: 10px; letter-spacing: 0.08em; color: var(--c-ink-soft); text-transform: uppercase; }
+.cat-chip[data-accent="sea"] { background: var(--c-sea-deep); color: var(--c-cream); }
+.cat-chip[data-accent="sea"] .ct { color: rgba(250,246,238,0.65); }
+.cat-chip[data-accent="sunset"] { background: var(--c-sunset); color: var(--c-cream); }
+.cat-chip[data-accent="sunset"] .ct { color: rgba(250,246,238,0.7); }
+
+/* Featured experiences — editorial cards */
+.featured { padding: 36px 0 8px; }
+.featured h2 {
+  font-family: var(--f-display); font-style: italic; font-weight: 400;
+  font-size: clamp(34px, 9vw, 56px); line-height: 0.95;
+  letter-spacing: -0.03em; padding: 0 20px; margin-bottom: 20px;
+}
+.featured h2 b { font-style: normal; font-weight: 700; color: var(--c-sunset); }
+.exp-list { display: flex; flex-direction: column; gap: 24px; padding: 0 20px; }
+.exp {
+  position: relative;
+  display: grid; grid-template-rows: auto auto auto;
+  border-radius: var(--radius-l); overflow: hidden;
+  background: var(--c-stone);
+  transition: transform 0.25s;
+}
+.exp:hover { transform: translateY(-3px); }
+.exp .photo {
+  aspect-ratio: 5 / 4; background-size: cover; background-position: center;
+  position: relative;
+}
+.exp .photo .corner {
+  position: absolute; top: 12px; left: 12px;
+  background: var(--c-cream); border-radius: 999px; padding: 6px 12px;
+  font-family: var(--f-mono); font-size: 10px; letter-spacing: 0.1em; text-transform: uppercase;
+  color: var(--c-ink);
+}
+.exp .photo .price {
+  position: absolute; bottom: 12px; right: 12px;
+  background: var(--c-ink); color: var(--c-cream);
+  border-radius: 999px; padding: 8px 16px;
+  font-family: var(--f-display); font-weight: 600; font-size: 18px;
+}
+.exp .photo .price small { font-family: var(--f-mono); font-weight: 400; font-size: 10px; opacity: 0.7; margin-left: 4px; }
+.exp .body { padding: 20px 22px 22px; }
+.exp .title {
+  font-family: var(--f-display); font-weight: 600; font-size: 28px;
+  letter-spacing: -0.02em; line-height: 1.05; color: var(--c-ink);
+}
+.exp .title em { font-style: italic; color: var(--c-sunset); font-weight: 400; }
+.exp .meta {
+  margin-top: 12px; display: flex; flex-wrap: wrap; gap: 8px 16px;
+  font-size: 13px; color: var(--c-ink-soft);
+}
+.exp .meta span { display: inline-flex; align-items: center; gap: 6px; }
+.exp .meta b { color: var(--c-ink); font-weight: 600; }
+.next-dates {
+  display: flex; flex-wrap: wrap; gap: 6px;
+  margin-top: 14px; padding-top: 14px;
+  border-top: 1px dashed var(--c-line);
+}
+.nd-pill {
+  font-family: var(--f-mono); font-size: 10px; letter-spacing: 0.04em;
+  padding: 6px 10px; border-radius: 999px;
+  background: var(--c-cream); color: var(--c-ink-soft);
+  border: 1px solid var(--c-line);
+}
+.nd-pill b { font-family: var(--f-display); font-weight: 600; font-size: 11px; color: var(--c-ink); margin-right: 4px; letter-spacing: 0; }
+.nd-pill.alt { background: var(--c-sunset); color: var(--c-cream); border-color: var(--c-sunset); }
+.nd-pill.alt b { color: var(--c-cream); }
+.exp .footer {
+  display: flex; align-items: center; justify-content: space-between;
+  padding: 14px 22px; border-top: 1px solid var(--c-line); background: rgba(255,255,255,0.4);
+}
+.exp .footer .op { font-family: var(--f-mono); font-size: 11px; letter-spacing: 0.06em; color: var(--c-ink-soft); text-transform: uppercase; }
+.exp .footer .cta {
+  font-family: var(--f-sans); font-weight: 600; font-size: 13px;
+  display: inline-flex; align-items: center; gap: 6px;
+  color: var(--c-ink);
+}
+.exp .footer .cta::after { content: '→'; transition: transform 0.2s; }
+.exp:hover .footer .cta::after { transform: translateX(4px); }
+
+/* Quote section */
+.quote { padding: 56px 20px 24px; }
+.quote p {
+  font-family: var(--f-display); font-style: italic; font-weight: 400;
+  font-size: clamp(24px, 6.5vw, 38px); line-height: 1.15;
+  letter-spacing: -0.02em; color: var(--c-sea-deep);
+}
+.quote p::before { content: '"'; color: var(--c-sunset); margin-right: 4px; }
+.quote cite {
+  display: block; margin-top: 16px;
+  font-family: var(--f-mono); font-style: normal; font-size: 11px;
+  letter-spacing: 0.1em; text-transform: uppercase; color: var(--c-ink-soft);
+}
+
+/* ============== ACTIVITY DETAIL ============== */
+.detail-hero { position: relative; height: 60vh; min-height: 420px; }
+.detail-hero .photo {
+  position: absolute; inset: 0;
+  background: url('https://images.unsplash.com/photo-1610552050890-fe99536c2615?w=1200&auto=format&fit=crop') center/cover, var(--c-sea-deep);
+}
+.detail-hero .photo::after {
+  content: ''; position: absolute; inset: 0;
+  background: linear-gradient(180deg, transparent 30%, rgba(10,58,74,0.85) 100%);
+}
+.detail-back {
+  position: absolute; top: calc(20px + var(--safe-top)); left: 20px; z-index: 2;
+  width: 40px; height: 40px; border-radius: 50%;
+  background: var(--c-cream); display: flex; align-items: center; justify-content: center;
+  font-size: 18px; box-shadow: 0 4px 14px rgba(0,0,0,0.15);
+}
+.detail-tag {
+  position: absolute; top: calc(20px + var(--safe-top)); right: 20px; z-index: 2;
+  padding: 8px 14px; border-radius: 999px;
+  background: rgba(250,246,238,0.85); backdrop-filter: blur(10px);
+  font-family: var(--f-mono); font-size: 10px; letter-spacing: 0.12em; text-transform: uppercase;
+}
+.detail-title-block {
+  position: absolute; left: 20px; right: 20px; bottom: 24px; z-index: 2; color: var(--c-cream);
+}
+.detail-eyebrow { font-family: var(--f-mono); font-size: 11px; letter-spacing: 0.16em; text-transform: uppercase; opacity: 0.75; }
+.detail-title {
+  font-family: var(--f-display); font-style: italic; font-weight: 400;
+  font-size: clamp(40px, 11vw, 78px); line-height: 0.95;
+  letter-spacing: -0.03em; margin-top: 8px;
+}
+.detail-title b { font-style: normal; font-weight: 700; }
+.detail-meta { margin-top: 14px; display: flex; flex-wrap: wrap; gap: 8px 18px; font-size: 13px; }
+.detail-meta b { font-weight: 600; }
+
+.detail-body { padding: 28px 20px 40px; }
+.detail-section + .detail-section { margin-top: 28px; }
+.detail-section h3 {
+  font-family: var(--f-display); font-size: 14px; font-weight: 500;
+  letter-spacing: 0.14em; text-transform: uppercase; color: var(--c-ink-soft);
+  margin-bottom: 12px;
+}
+.detail-section p { font-size: 15px; line-height: 1.6; color: var(--c-ink); }
+.detail-includes {
+  display: grid; grid-template-columns: 1fr 1fr; gap: 10px 14px; margin-top: 4px;
+}
+.detail-includes li {
+  list-style: none; font-size: 13px; line-height: 1.4;
+  display: flex; gap: 8px; color: var(--c-ink-soft);
+}
+.detail-includes li::before { content: ''; width: 14px; height: 14px; flex-shrink: 0; margin-top: 3px; border-radius: 50%; background: var(--c-sea-light); display: block; }
+.detail-includes li b { color: var(--c-ink); font-weight: 600; }
+
+.operator-card {
+  display: flex; align-items: center; gap: 14px;
+  padding: 16px; border-radius: var(--radius-m);
+  background: var(--c-stone);
+}
+.operator-card .av {
+  width: 48px; height: 48px; border-radius: 50%;
+  background: linear-gradient(135deg, var(--c-amber), var(--c-sunset));
+  flex-shrink: 0;
+  display: flex; align-items: center; justify-content: center;
+  font-family: var(--f-display); font-weight: 600; color: var(--c-cream);
+}
+.operator-card .nm { font-family: var(--f-display); font-weight: 600; font-size: 18px; letter-spacing: -0.01em; }
+.operator-card .role { font-size: 12px; color: var(--c-ink-soft); margin-top: 2px; }
+.operator-card .stars { font-size: 12px; color: var(--c-amber); margin-top: 4px; letter-spacing: 0.05em; }
+
+.dates-strip { display: flex; gap: 8px; overflow-x: auto; scrollbar-width: none; padding-bottom: 6px; }
+.dates-strip::-webkit-scrollbar { display: none; }
+.date-pill {
+  flex: 0 0 auto; padding: 12px 16px; border-radius: var(--radius-m);
+  background: var(--c-stone); border: 1px solid transparent;
+  text-align: center; min-width: 76px;
+}
+.date-pill.is-selected { background: var(--c-ink); color: var(--c-cream); }
+.date-pill .d { font-family: var(--f-display); font-weight: 600; font-size: 22px; line-height: 1; }
+.date-pill .m { font-family: var(--f-mono); font-size: 10px; letter-spacing: 0.1em; text-transform: uppercase; opacity: 0.7; margin-top: 4px; }
+
+/* Sticky book bar */
+.book-bar {
+  position: sticky; bottom: calc(80px + var(--safe-bottom)); z-index: 40;
+  margin: 24px 12px 0;
+  background: var(--c-cream); border: 1px solid var(--c-line-strong);
+  border-radius: 999px; padding: 6px 6px 6px 22px;
+  display: flex; align-items: center; justify-content: space-between;
+  box-shadow: 0 18px 40px -12px rgba(10,58,74,0.35);
+}
+.book-bar .pr { font-family: var(--f-display); font-weight: 600; font-size: 22px; }
+.book-bar .pr small { font-family: var(--f-mono); font-weight: 400; font-size: 11px; color: var(--c-ink-soft); margin-left: 4px; }
+.book-bar .btn-book {
+  background: var(--c-sunset); color: var(--c-cream);
+  border-radius: 999px; padding: 14px 22px;
+  font-weight: 600; font-size: 14px; letter-spacing: 0.02em;
+  display: inline-flex; align-items: center; gap: 8px;
+  transition: transform 0.15s, background 0.2s;
+}
+.book-bar .btn-book:hover { background: var(--c-ink); transform: translateY(-1px); }
+.book-bar .btn-book::after { content: '→'; }
+
+/* ============== BOOKING FLOW ============== */
+.booking-head {
+  padding: calc(24px + var(--safe-top)) 20px 16px;
+  background: var(--c-stone);
+}
+.booking-step {
+  font-family: var(--f-mono); font-size: 11px; letter-spacing: 0.16em;
+  text-transform: uppercase; color: var(--c-ink-soft);
+}
+.booking-title {
+  font-family: var(--f-display); font-style: italic; font-weight: 400;
+  font-size: clamp(36px, 10vw, 64px); line-height: 0.95;
+  letter-spacing: -0.03em; margin-top: 10px;
+}
+.booking-title b { font-style: normal; font-weight: 700; color: var(--c-sea-deep); }
+
+.progress { display: flex; gap: 6px; margin-top: 22px; }
+.progress span { flex: 1; height: 3px; background: var(--c-line); border-radius: 999px; }
+.progress span.is-done { background: var(--c-sunset); }
+
+.booking-body { padding: 28px 20px 32px; display: flex; flex-direction: column; gap: 24px; }
+.field label {
+  display: block; font-family: var(--f-mono); font-size: 11px; letter-spacing: 0.12em;
+  text-transform: uppercase; color: var(--c-ink-soft); margin-bottom: 8px;
+}
+.field .ctrl {
+  width: 100%; padding: 14px 16px; border-radius: var(--radius-m);
+  background: var(--c-stone); border: 1px solid transparent;
+  font-family: var(--f-sans); font-size: 16px; color: var(--c-ink);
+  transition: border-color 0.2s, background 0.2s;
+}
+.field .ctrl:focus { outline: 0; background: var(--c-cream); border-color: var(--c-ink); }
+
+.qty {
+  display: flex; align-items: center; gap: 12px;
+  background: var(--c-stone); border-radius: var(--radius-m); padding: 12px 16px;
+}
+.qty button {
+  width: 40px; height: 40px; border-radius: 50%; background: var(--c-cream);
+  font-size: 20px; font-weight: 500;
+}
+.qty .val { flex: 1; text-align: center; font-family: var(--f-display); font-weight: 600; font-size: 28px; }
+
+.times { display: grid; grid-template-columns: repeat(3, 1fr); gap: 8px; }
+.time-pill {
+  padding: 12px; border-radius: var(--radius-m); background: var(--c-stone);
+  text-align: center; font-family: var(--f-display); font-weight: 600; font-size: 16px;
+  border: 1px solid transparent;
+}
+.time-pill.is-selected { background: var(--c-ink); color: var(--c-cream); }
+.time-pill.is-disabled { opacity: 0.35; text-decoration: line-through; }
+
+.prepay-card {
+  display: flex; gap: 14px; padding: 18px;
+  border-radius: var(--radius-m); background: var(--c-sea-deep); color: var(--c-cream);
+}
+.prepay-card .ico {
+  width: 44px; height: 44px; flex-shrink: 0; border-radius: 50%;
+  background: var(--c-amber); color: var(--c-ink);
+  display: flex; align-items: center; justify-content: center;
+  font-family: var(--f-display); font-weight: 700; font-size: 20px;
+}
+.prepay-card h4 { font-family: var(--f-display); font-weight: 600; font-size: 18px; letter-spacing: -0.01em; }
+.prepay-card p { font-size: 13px; line-height: 1.5; opacity: 0.85; margin-top: 4px; }
+.prepay-card .toggle {
+  width: 44px; height: 26px; flex-shrink: 0;
+  background: rgba(255,255,255,0.25); border-radius: 999px; position: relative;
+  align-self: center;
+}
+.prepay-card .toggle::after {
+  content: ''; position: absolute; top: 3px; left: 3px;
+  width: 20px; height: 20px; border-radius: 50%;
+  background: var(--c-cream); transition: left 0.2s;
+}
+.prepay-card .toggle.is-on { background: var(--c-sunset); }
+.prepay-card .toggle.is-on::after { left: 21px; }
+
+.summary-row {
+  display: flex; justify-content: space-between; align-items: baseline;
+  padding: 14px 0; border-bottom: 1px dashed var(--c-line);
+  font-size: 14px;
+}
+.summary-row:last-child { border-bottom: 0; }
+.summary-row b { font-family: var(--f-display); font-weight: 600; font-size: 18px; }
+.summary-row.total b { font-size: 28px; color: var(--c-sunset); }
+
+.btn-primary {
+  width: 100%; padding: 18px; border-radius: 999px;
+  background: var(--c-sunset); color: var(--c-cream);
+  font-family: var(--f-sans); font-weight: 600; font-size: 16px; letter-spacing: 0.01em;
+  display: inline-flex; align-items: center; justify-content: center; gap: 10px;
+  transition: background 0.2s, transform 0.15s;
+}
+.btn-primary:hover { background: var(--c-ink); transform: translateY(-1px); }
+.btn-primary::after { content: '→'; font-size: 18px; }
+
+/* ============== MY BOOKINGS ============== */
+.bookings-head {
+  padding: calc(28px + var(--safe-top)) 20px 12px;
+}
+.bookings-head .eyebrow { font-family: var(--f-mono); font-size: 11px; letter-spacing: 0.16em; text-transform: uppercase; color: var(--c-ink-soft); }
+.bookings-head h1 {
+  font-family: var(--f-display); font-style: italic; font-weight: 400;
+  font-size: clamp(40px, 11vw, 72px); line-height: 0.95;
+  letter-spacing: -0.03em; margin-top: 10px;
+}
+.bookings-head h1 b { font-style: normal; font-weight: 700; color: var(--c-sea-deep); }
+.bookings-filter { display: flex; gap: 8px; padding: 16px 20px 8px; overflow-x: auto; scrollbar-width: none; }
+.bookings-filter::-webkit-scrollbar { display: none; }
+.f-pill {
+  flex: 0 0 auto; padding: 8px 14px; border-radius: 999px;
+  background: var(--c-stone); font-family: var(--f-mono); font-size: 11px;
+  letter-spacing: 0.08em; text-transform: uppercase; color: var(--c-ink-soft);
+}
+.f-pill.is-active { background: var(--c-ink); color: var(--c-cream); }
+
+.booking-list { padding: 12px 20px 32px; display: flex; flex-direction: column; gap: 14px; }
+.bk {
+  display: grid; grid-template-columns: 80px 1fr; gap: 14px;
+  padding: 14px; border-radius: var(--radius-m);
+  background: var(--c-stone); border-left: 3px solid var(--c-sea-light);
+}
+.bk[data-status="pending"] { border-left-color: var(--c-amber); }
+.bk[data-status="confirmed"] { border-left-color: var(--c-sea-light); }
+.bk[data-status="paid"] { border-left-color: var(--c-sunset); }
+.bk[data-status="done"] { border-left-color: var(--c-ink-soft); opacity: 0.7; }
+.bk .img { aspect-ratio: 1/1; border-radius: var(--radius-s); background-size: cover; background-position: center; }
+.bk .nm { font-family: var(--f-display); font-weight: 600; font-size: 17px; letter-spacing: -0.01em; line-height: 1.15; }
+.bk .when { font-family: var(--f-mono); font-size: 11px; letter-spacing: 0.06em; text-transform: uppercase; color: var(--c-ink-soft); margin-top: 6px; }
+.bk .status {
+  display: inline-block; margin-top: 8px;
+  font-family: var(--f-mono); font-size: 10px; letter-spacing: 0.12em; text-transform: uppercase;
+  padding: 4px 8px; border-radius: 4px;
+}
+.bk[data-status="pending"] .status { background: rgba(230,164,23,0.15); color: #8a5e0a; }
+.bk[data-status="confirmed"] .status { background: rgba(103,168,190,0.18); color: var(--c-sea-deep); }
+.bk[data-status="paid"] .status { background: rgba(214,84,29,0.15); color: var(--c-sunset); }
+.bk[data-status="done"] .status { background: rgba(21,23,26,0.08); color: var(--c-ink-soft); }
+
+/* ============== ADMIN ============== */
+.admin {
+  padding: calc(28px + var(--safe-top)) 20px 32px;
+  background: var(--c-ink); color: var(--c-cream);
+  min-height: calc(100dvh - 80px);
+}
+.admin-head {
+  display: flex; align-items: flex-end; justify-content: space-between;
+  margin-bottom: 28px;
+}
+.admin-eyebrow { font-family: var(--f-mono); font-size: 11px; letter-spacing: 0.16em; text-transform: uppercase; color: rgba(250,246,238,0.55); }
+.admin-title {
+  font-family: var(--f-display); font-style: italic; font-weight: 400;
+  font-size: clamp(36px, 10vw, 60px); line-height: 0.95;
+  letter-spacing: -0.03em; margin-top: 6px;
+}
+.admin-title b { font-style: normal; font-weight: 700; color: var(--c-amber); }
+.admin-stats {
+  display: grid; grid-template-columns: repeat(3, 1fr); gap: 8px;
+  margin-bottom: 24px;
+}
+.stat {
+  padding: 16px 14px; border-radius: var(--radius-m);
+  background: rgba(250,246,238,0.06); border: 1px solid rgba(250,246,238,0.1);
+}
+.stat .v { font-family: var(--f-display); font-weight: 600; font-size: 28px; letter-spacing: -0.02em; line-height: 1; }
+.stat .l { font-family: var(--f-mono); font-size: 9px; letter-spacing: 0.1em; text-transform: uppercase; color: rgba(250,246,238,0.6); margin-top: 6px; }
+.stat[data-tone="amber"] .v { color: var(--c-amber); }
+.stat[data-tone="sunset"] .v { color: var(--c-sunset); }
+
+.req {
+  background: rgba(250,246,238,0.05); border: 1px solid rgba(250,246,238,0.1);
+  border-radius: var(--radius-m); padding: 16px;
+  display: grid; grid-template-columns: 56px 1fr auto; gap: 14px; align-items: start;
+  margin-bottom: 12px;
+}
+.req .av {
+  width: 56px; height: 56px; border-radius: 50%;
+  background: linear-gradient(135deg, var(--c-amber), var(--c-sunset));
+  display: flex; align-items: center; justify-content: center;
+  font-family: var(--f-display); font-weight: 700; font-size: 22px; color: var(--c-ink);
+}
+.req .who { font-family: var(--f-display); font-weight: 600; font-size: 17px; letter-spacing: -0.01em; }
+.req .what { font-size: 13px; opacity: 0.85; margin-top: 4px; line-height: 1.4; }
+.req .ts { font-family: var(--f-mono); font-size: 10px; letter-spacing: 0.08em; color: rgba(250,246,238,0.5); margin-top: 6px; }
+.req .actions { display: flex; flex-direction: column; gap: 6px; align-items: flex-end; }
+.req .actions .pr { font-family: var(--f-display); font-weight: 600; font-size: 18px; color: var(--c-amber); }
+.req .actions .badge {
+  font-family: var(--f-mono); font-size: 9px; letter-spacing: 0.12em; text-transform: uppercase;
+  padding: 3px 6px; border-radius: 4px;
+  background: rgba(214,84,29,0.2); color: var(--c-sunset);
+}
+.req-cta { display: flex; gap: 8px; grid-column: 1 / -1; margin-top: 6px; }
+.req-cta button { flex: 1; padding: 11px; border-radius: 999px; font-weight: 600; font-size: 13px; }
+.req-cta .accept { background: var(--c-sunset); color: var(--c-cream); }
+.req-cta .decline { background: rgba(250,246,238,0.08); color: var(--c-cream); }
+.req-cta .contact { background: var(--c-amber); color: var(--c-ink); }
+
+/* Footer note for prototype */
+.proto-note {
+  margin: 32px 20px 16px; padding: 12px 16px;
+  border: 1px dashed var(--c-line-strong); border-radius: var(--radius-s);
+  font-family: var(--f-mono); font-size: 10px; letter-spacing: 0.06em;
+  text-transform: uppercase; color: var(--c-ink-soft); text-align: center;
+}
+
+/* Responsive — wide screens */
+@media (min-width: 720px) {
+  body { max-width: 480px; margin: 0 auto; box-shadow: 0 0 80px rgba(10,58,74,0.18); }
+}
+</style>
+</head>
+<body>
+
+<header class="brand-bar">
+  <div class="brand-row">
+    <div class="brand-mark"></div>
+    <div class="brand">Kaş <i>Experiences</i></div>
+  </div>
+  <span class="locale">EN · RU · TR</span>
+</header>
+
+<!-- ============== HOME / DISCOVER ============== -->
+<section class="screen" data-screen="home" data-active="true">
+  <div class="hero">
+    <div class="hero-eyebrow">Lycian coast · 36°12'N · since forever</div>
+    <h1 class="hero-title">
+      <b>Kaş.</b>
+      <em>One booking</em>
+      for everything you came here for.
+    </h1>
+    <div class="hero-meta">
+      <span><b>62</b> experiences</span>
+      <span class="dot"></span>
+      <span><b>17</b> operators</span>
+      <span class="dot"></span>
+      <span>One admin · one prepayment</span>
+    </div>
+    <div class="hero-photo">
+      <div class="hero-photo-tag">
+        <div class="lbl">Tersane bay <br/>& <i>Üçağız</i></div>
+        <div class="meta">Sat 10 May · 09:30 · 4 spots left</div>
+      </div>
+    </div>
+  </div>
+
+  <div class="cats">
+    <h2><span>Browse by mood</span><a href="#">All →</a></h2>
+    <div class="cats-row">
+      <button class="cat-chip" data-accent="sea">
+        <span class="ico">🛥</span>
+        <span class="nm">Sea & Boat</span>
+        <span class="ct">14 trips</span>
+      </button>
+      <button class="cat-chip">
+        <span class="ico">🤿</span>
+        <span class="nm">Water sports</span>
+        <span class="ct">9 ops</span>
+      </button>
+      <button class="cat-chip" data-accent="sunset">
+        <span class="ico">🪂</span>
+        <span class="nm">Adventure</span>
+        <span class="ct">6 routes</span>
+      </button>
+      <button class="cat-chip">
+        <span class="ico">🏛</span>
+        <span class="nm">Tours</span>
+        <span class="ct">11 places</span>
+      </button>
+      <button class="cat-chip">
+        <span class="ico">🎾</span>
+        <span class="nm">Sports</span>
+        <span class="ct">7 courts</span>
+      </button>
+      <button class="cat-chip">
+        <span class="ico">💆</span>
+        <span class="nm">Wellness</span>
+        <span class="ct">8 places</span>
+      </button>
+    </div>
+  </div>
+
+  <div class="featured">
+    <h2>What's in season <b>this week.</b></h2>
+    <div class="exp-list">
+
+      <article class="exp" onclick="go('detail')">
+        <div class="photo" style="background-image: url('https://images.unsplash.com/photo-1602002418082-a4443e081dd1?w=900&auto=format&fit=crop'), url('https://images.unsplash.com/photo-1559348349-86f1f65817fe?w=900&auto=format&fit=crop');">
+          <span class="corner">★ Local favorite</span>
+          <span class="price">€70<small>/person</small></span>
+        </div>
+        <div class="body">
+          <h3 class="title">Day trip · <em>Tersane & Üçağız</em></h3>
+          <div class="meta">
+            <span>🗓 <b>Sat 10 May</b> · 09:30</span>
+            <span>⏱ Full day</span>
+            <span>🍴 Lunch on board</span>
+            <span>👥 max 12</span>
+          </div>
+          <div class="next-dates">
+            <span class="nd-pill"><b>Sat</b> 10 · 09:30</span>
+            <span class="nd-pill"><b>Mon</b> 12 · 09:30</span>
+            <span class="nd-pill"><b>Thu</b> 15 · 09:30</span>
+            <span class="nd-pill alt"><b>Sun</b> 18 · 12:00</span>
+            <span class="nd-pill">+ 4 more</span>
+          </div>
+        </div>
+        <div class="footer">
+          <span class="op">Operator · Captain Ergün</span>
+          <span class="cta">Book now</span>
+        </div>
+      </article>
+
+      <article class="exp" onclick="go('detail')">
+        <div class="photo" style="background-image: url('https://images.unsplash.com/photo-1530549387789-4c1017266635?w=900&auto=format&fit=crop');">
+          <span class="corner">New · May</span>
+          <span class="price">€55<small>/person</small></span>
+        </div>
+        <div class="body">
+          <h3 class="title">SUP with <em>sea turtles</em></h3>
+          <div class="meta">
+            <span>🗓 Daily 07:00</span>
+            <span>⏱ 2.5h</span>
+            <span>🐢 turtle bay</span>
+            <span>👥 max 8</span>
+          </div>
+          <div class="next-dates">
+            <span class="nd-pill"><b>Fri</b> 9 · 07:00</span>
+            <span class="nd-pill"><b>Sat</b> 10 · 07:00</span>
+            <span class="nd-pill"><b>Sun</b> 11 · 07:00</span>
+            <span class="nd-pill alt"><b>Sun</b> 11 · 17:30</span>
+            <span class="nd-pill">+ daily</span>
+          </div>
+        </div>
+        <div class="footer">
+          <span class="op">Operator · Larsoy SUP</span>
+          <span class="cta">Book now</span>
+        </div>
+      </article>
+
+      <article class="exp" onclick="go('detail')">
+        <div class="photo" style="background-image: url('https://images.unsplash.com/photo-1473773508845-188df298d2d1?w=900&auto=format&fit=crop');">
+          <span class="corner">Adrenaline</span>
+          <span class="price">€140<small>/person</small></span>
+        </div>
+        <div class="body">
+          <h3 class="title">Paragliding from <em>Babadağ</em></h3>
+          <div class="meta">
+            <span>🗓 Daily, weather-dep.</span>
+            <span>📍 Ölüdeniz · 1h transfer</span>
+            <span>🪂 1900 m descent</span>
+          </div>
+          <div class="next-dates">
+            <span class="nd-pill"><b>Fri</b> 9 · 11:00</span>
+            <span class="nd-pill"><b>Sat</b> 10 · 11:00</span>
+            <span class="nd-pill"><b>Sun</b> 11 · 11:00</span>
+            <span class="nd-pill alt"><b>Mon</b> 12 · 14:00</span>
+          </div>
+        </div>
+        <div class="footer">
+          <span class="op">Operator · Sky Sports Ölüdeniz</span>
+          <span class="cta">Book now</span>
+        </div>
+      </article>
+
+      <article class="exp" onclick="go('detail')">
+        <div class="photo" style="background-image: url('https://images.unsplash.com/photo-1444840535719-195841cb6e2b?w=900&auto=format&fit=crop');">
+          <span class="corner">Sunset</span>
+          <span class="price">€90<small>/person</small></span>
+        </div>
+        <div class="body">
+          <h3 class="title">Sunset over <em>Kaş harbour</em></h3>
+          <div class="meta">
+            <span>🗓 Daily 17:30</span>
+            <span>⏱ 3h</span>
+            <span>🥂 wine on board</span>
+            <span>👥 max 6</span>
+          </div>
+          <div class="next-dates">
+            <span class="nd-pill"><b>Fri</b> 9 · 17:30</span>
+            <span class="nd-pill"><b>Sat</b> 10 · 17:30</span>
+            <span class="nd-pill"><b>Sun</b> 11 · 17:30</span>
+            <span class="nd-pill alt"><b>Wed</b> 14 · 17:30</span>
+          </div>
+        </div>
+        <div class="footer">
+          <span class="op">Operator · Captain Ergün · private</span>
+          <span class="cta">Book now</span>
+        </div>
+      </article>
+
+      <article class="exp" onclick="go('detail')">
+        <div class="photo" style="background-image: url('https://images.unsplash.com/photo-1554068865-24cecd4e34b8?w=900&auto=format&fit=crop');">
+          <span class="corner">Court time</span>
+          <span class="price">€24<small>/hour</small></span>
+        </div>
+        <div class="body">
+          <h3 class="title">Tennis · <em>centre Kaş</em></h3>
+          <div class="meta">
+            <span>🗓 Mon-Sun · 07-22</span>
+            <span>🎾 racket rental incl.</span>
+            <span>👥 1 v 1 or 2 v 2</span>
+          </div>
+          <div class="next-dates">
+            <span class="nd-pill"><b>Today</b> · 18:00</span>
+            <span class="nd-pill"><b>Today</b> · 19:00</span>
+            <span class="nd-pill alt"><b>Fri</b> · 07:00</span>
+            <span class="nd-pill"><b>Fri</b> · 18:00</span>
+            <span class="nd-pill">+ slots/day</span>
+          </div>
+        </div>
+        <div class="footer">
+          <span class="op">Operator · Kaş Tennis Club</span>
+          <span class="cta">Book now</span>
+        </div>
+      </article>
+
+      <article class="exp" onclick="go('detail')">
+        <div class="photo" style="background-image: url('https://images.unsplash.com/photo-1464822759023-fed622ff2c3b?w=900&auto=format&fit=crop');">
+          <span class="corner">Hike</span>
+          <span class="price">€45<small>/person</small></span>
+        </div>
+        <div class="body">
+          <h3 class="title">Climb <em>Uyuyan Dev</em></h3>
+          <div class="meta">
+            <span>🗓 Tue · Fri · Sun</span>
+            <span>⏱ 6h round-trip</span>
+            <span>📍 Sleeping Giant peak</span>
+            <span>👥 max 8</span>
+          </div>
+          <div class="next-dates">
+            <span class="nd-pill"><b>Fri</b> 9 · 06:30</span>
+            <span class="nd-pill"><b>Sun</b> 11 · 06:30</span>
+            <span class="nd-pill alt"><b>Tue</b> 13 · 06:30</span>
+          </div>
+        </div>
+        <div class="footer">
+          <span class="op">Operator · Lycian Trails Kaş</span>
+          <span class="cta">Book now</span>
+        </div>
+      </article>
+
+      <article class="exp" onclick="go('detail')">
+        <div class="photo" style="background-image: url('https://images.unsplash.com/photo-1553284965-83fd3e82fa5a?w=900&auto=format&fit=crop');">
+          <span class="corner">New</span>
+          <span class="price">€60<small>/person</small></span>
+        </div>
+        <div class="body">
+          <h3 class="title">Horse riding · <em>Patara beach</em></h3>
+          <div class="meta">
+            <span>🗓 Daily · sunrise & sunset</span>
+            <span>⏱ 2h</span>
+            <span>🐎 trained horses</span>
+            <span>👥 beginners ok</span>
+          </div>
+          <div class="next-dates">
+            <span class="nd-pill"><b>Fri</b> 9 · 07:00</span>
+            <span class="nd-pill alt"><b>Fri</b> 9 · 18:00</span>
+            <span class="nd-pill"><b>Sat</b> 10 · 07:00</span>
+            <span class="nd-pill alt"><b>Sat</b> 10 · 18:00</span>
+          </div>
+        </div>
+        <div class="footer">
+          <span class="op">Operator · Patara Horse Ranch</span>
+          <span class="cta">Book now</span>
+        </div>
+      </article>
+
+    </div>
+  </div>
+
+  <div class="quote">
+    <p>Every activity used to live in a different DM. We made it one place — for travellers, and for the people who run them.</p>
+    <cite>— Gül, founder, Kaş</cite>
+  </div>
+</section>
+
+<!-- ============== ACTIVITY DETAIL ============== -->
+<section class="screen" data-screen="detail">
+  <div class="detail-hero">
+    <div class="photo"></div>
+    <button class="detail-back" onclick="go('home')">←</button>
+    <span class="detail-tag">Sea & Boat · €70</span>
+    <div class="detail-title-block">
+      <div class="detail-eyebrow">Most-booked experience this week</div>
+      <h1 class="detail-title">
+        <b>Kekova.</b><br/>
+        <span>Sunken city,</span><br/>
+        <em style="font-style:italic;">slow lunch.</em>
+      </h1>
+      <div class="detail-meta">
+        <span>⏱ <b>9 hours</b></span>
+        <span>👥 max 12</span>
+        <span>🍴 Lunch on board</span>
+        <span>⭐ 4.9 · 184 reviews</span>
+      </div>
+    </div>
+  </div>
+
+  <div class="detail-body">
+    <div class="detail-section">
+      <h3>What you'll do</h3>
+      <p>Leave Kaş at 09:30. We board Captain Ergün's wooden gulet at the neighbouring port (transfer included). The route follows the Lycian coast over the sunken ruins of <b>Simena</b> — visible through the clear water — past Kekova island, with stops in the hidden coves for swimming. Slow lunch on board. Free hour in the castle village of Kaleköy. Back to Kaş by sunset.</p>
+    </div>
+
+    <div class="detail-section">
+      <h3>What's included</h3>
+      <ul class="detail-includes">
+        <li><b>Transfer</b><br/>Kaş → port → Kaş</li>
+        <li><b>Captain & crew</b><br/>licensed, EN-friendly</li>
+        <li><b>Hot lunch</b><br/>fish, salads, fruit</li>
+        <li><b>Snorkel gear</b><br/>provided</li>
+        <li><b>Swim stops</b><br/>2 coves</li>
+        <li><b>Soft drinks</b><br/>tea, water, juice</li>
+      </ul>
+    </div>
+
+    <div class="detail-section">
+      <h3>Operator</h3>
+      <div class="operator-card">
+        <div class="av">CE</div>
+        <div>
+          <div class="nm">Captain Ergün · <span style="color:var(--c-sunset);">Larsoy</span></div>
+          <div class="role">Local · 22 years on water · gulet "Yelken"</div>
+          <div class="stars">★★★★★ <span style="color:var(--c-ink-soft);">184 trips · 4.9</span></div>
+        </div>
+      </div>
+    </div>
+
+    <div class="detail-section">
+      <h3>Available dates</h3>
+      <div class="dates-strip">
+        <div class="date-pill"><div class="d">8</div><div class="m">Thu May</div></div>
+        <div class="date-pill is-selected"><div class="d">10</div><div class="m">Sat May</div></div>
+        <div class="date-pill"><div class="d">12</div><div class="m">Mon May</div></div>
+        <div class="date-pill"><div class="d">15</div><div class="m">Thu May</div></div>
+        <div class="date-pill"><div class="d">18</div><div class="m">Sun May</div></div>
+        <div class="date-pill"><div class="d">22</div><div class="m">Thu May</div></div>
+        <div class="date-pill"><div class="d">25</div><div class="m">Sun May</div></div>
+      </div>
+    </div>
+  </div>
+
+  <div class="book-bar">
+    <div class="pr">€70<small>per person</small></div>
+    <button class="btn-book" onclick="go('booking')">Reserve a seat</button>
+  </div>
+</section>
+
+<!-- ============== BOOKING FLOW ============== -->
+<section class="screen" data-screen="booking">
+  <div class="booking-head">
+    <button class="detail-back" style="position:relative;top:0;left:0;margin-bottom:14px;" onclick="go('detail')">←</button>
+    <div class="booking-step">Step 2 of 3 · You're booking</div>
+    <h1 class="booking-title"><b>Kekova,</b> Sat 10 May, 09:30</h1>
+    <div class="progress">
+      <span class="is-done"></span>
+      <span class="is-done"></span>
+      <span></span>
+    </div>
+  </div>
+
+  <div class="booking-body">
+
+    <div class="field">
+      <label>How many of you?</label>
+      <div class="qty">
+        <button>−</button>
+        <span class="val">2</span>
+        <button>+</button>
+      </div>
+    </div>
+
+    <div class="field">
+      <label>Departure time</label>
+      <div class="times">
+        <div class="time-pill is-disabled">07:00</div>
+        <div class="time-pill is-selected">09:30</div>
+        <div class="time-pill">12:00</div>
+        <div class="time-pill is-disabled">14:30</div>
+        <div class="time-pill">17:30</div>
+        <div class="time-pill">19:00</div>
+      </div>
+    </div>
+
+    <div class="field">
+      <label>Your name</label>
+      <input class="ctrl" type="text" value="Tim Zinin" />
+    </div>
+
+    <div class="field">
+      <label>Phone or @username</label>
+      <input class="ctrl" type="tel" value="@timzinin" />
+    </div>
+
+    <div class="prepay-card">
+      <div class="ico">€</div>
+      <div style="flex:1;">
+        <h4>Prepay 30%, lock the seat</h4>
+        <p>You pay €42 now via card. The rest — at the boat. Cancel up to 24h before for full refund.</p>
+      </div>
+      <div class="toggle is-on"></div>
+    </div>
+
+    <div class="field" style="background:var(--c-stone);padding:18px;border-radius:var(--radius-m);">
+      <div class="summary-row"><span>2 × adult seat</span><b>€140</b></div>
+      <div class="summary-row"><span>Lunch & transfer</span><span style="color:var(--c-sea-light);">included</span></div>
+      <div class="summary-row"><span style="color:var(--c-ink-soft);">Pay now (30%)</span><b>€42</b></div>
+      <div class="summary-row total"><span>Total</span><b>€140</b></div>
+    </div>
+
+    <button class="btn-primary" onclick="go('mybookings')">Confirm & pay €42</button>
+
+    <p style="font-family:var(--f-mono);font-size:11px;color:var(--c-ink-soft);text-align:center;letter-spacing:0.08em;">
+      No payment? You can also book without prepay — Gül will message you to confirm.
+    </p>
+  </div>
+</section>
+
+<!-- ============== MY BOOKINGS ============== -->
+<section class="screen" data-screen="mybookings">
+  <div class="bookings-head">
+    <div class="eyebrow">Hello, Tim · 3 upcoming</div>
+    <h1>Your <b>summer.</b></h1>
+  </div>
+  <div class="bookings-filter">
+    <span class="f-pill is-active">All</span>
+    <span class="f-pill">Upcoming</span>
+    <span class="f-pill">Pending</span>
+    <span class="f-pill">Past</span>
+  </div>
+
+  <div class="booking-list">
+
+    <article class="bk" data-status="pending">
+      <div class="img" style="background-image:url('https://images.unsplash.com/photo-1559348349-86f1f65817fe?w=400&auto=format&fit=crop');"></div>
+      <div>
+        <div class="nm">Kekova boat trip — group</div>
+        <div class="when">Sat 10 May · 09:30 · 2 ppl</div>
+        <span class="status">⏳ Awaiting Gül's confirm</span>
+      </div>
+    </article>
+
+    <article class="bk" data-status="confirmed">
+      <div class="img" style="background-image:url('https://images.unsplash.com/photo-1511216335778-7e259e1d3aa9?w=400&auto=format&fit=crop');"></div>
+      <div>
+        <div class="nm">SUP morning · turtles</div>
+        <div class="when">Sun 11 May · 07:00 · 2 ppl</div>
+        <span class="status">✓ Confirmed · pay at the beach</span>
+      </div>
+    </article>
+
+    <article class="bk" data-status="paid">
+      <div class="img" style="background-image:url('https://images.unsplash.com/photo-1473773508845-188df298d2d1?w=400&auto=format&fit=crop');"></div>
+      <div>
+        <div class="nm">Paragliding · Babadağ</div>
+        <div class="when">Wed 14 May · 11:00 · 1 person</div>
+        <span class="status">€140 paid · ready to fly</span>
+      </div>
+    </article>
+
+    <article class="bk" data-status="done">
+      <div class="img" style="background-image:url('https://images.unsplash.com/photo-1500530855697-b586d89ba3ee?w=400&auto=format&fit=crop');"></div>
+      <div>
+        <div class="nm">Sunset yacht · private</div>
+        <div class="when">Sat 4 May · 17:30 · 4 ppl</div>
+        <span class="status">Completed · leave a review</span>
+      </div>
+    </article>
+
+  </div>
+</section>
+
+<!-- ============== ADMIN PANEL ============== -->
+<section class="screen" data-screen="admin">
+  <div class="admin">
+    <div class="admin-head">
+      <div>
+        <div class="admin-eyebrow">Today · Thursday 8 May 2026</div>
+        <h1 class="admin-title">Hello, <b>Gül.</b></h1>
+      </div>
+    </div>
+
+    <div class="admin-stats">
+      <div class="stat" data-tone="amber">
+        <div class="v">7</div>
+        <div class="l">New · awaiting</div>
+      </div>
+      <div class="stat" data-tone="sunset">
+        <div class="v">€684</div>
+        <div class="l">Prepaid today</div>
+      </div>
+      <div class="stat">
+        <div class="v">22</div>
+        <div class="l">Trips this week</div>
+      </div>
+    </div>
+
+    <div style="margin-bottom:14px;font-family:var(--f-mono);font-size:11px;letter-spacing:0.14em;text-transform:uppercase;color:rgba(250,246,238,0.5);">
+      Inbox · most recent
+    </div>
+
+    <article class="req">
+      <div class="av">T</div>
+      <div>
+        <div class="who">Tim Zinin · @timzinin</div>
+        <div class="what">Kekova boat trip · Sat 10 May 09:30 · 2 ppl</div>
+        <div class="ts">3 min ago · prepay €42 ✓</div>
+      </div>
+      <div class="actions">
+        <span class="pr">€140</span>
+        <span class="badge">prepaid</span>
+      </div>
+      <div class="req-cta">
+        <button class="accept">Confirm</button>
+        <button class="contact">Message</button>
+        <button class="decline">Decline</button>
+      </div>
+    </article>
+
+    <article class="req">
+      <div class="av">M</div>
+      <div>
+        <div class="who">Maria Ivanova · +90 532...</div>
+        <div class="what">Paragliding Babadağ · Sat 10 May · 1 person</div>
+        <div class="ts">12 min ago · no prepay</div>
+      </div>
+      <div class="actions">
+        <span class="pr">€140</span>
+      </div>
+      <div class="req-cta">
+        <button class="accept">Confirm</button>
+        <button class="contact">Message</button>
+        <button class="decline">Decline</button>
+      </div>
+    </article>
+
+    <article class="req">
+      <div class="av">A</div>
+      <div>
+        <div class="who">Alyona G. · @alyonagria</div>
+        <div class="what">Private sunset yacht · Sun 11 May 17:30 · 6 ppl</div>
+        <div class="ts">1h ago · prepay €120 ✓</div>
+      </div>
+      <div class="actions">
+        <span class="pr">€540</span>
+        <span class="badge">prepaid</span>
+      </div>
+      <div class="req-cta">
+        <button class="accept">Confirm</button>
+        <button class="contact">Message</button>
+        <button class="decline">Decline</button>
+      </div>
+    </article>
+
+    <article class="req">
+      <div class="av">D</div>
+      <div>
+        <div class="who">Daniel Kirby · @dkirby</div>
+        <div class="what">Padel court · 2h · Fri 9 May 18:00 · 4 ppl</div>
+        <div class="ts">1h ago · no prepay</div>
+      </div>
+      <div class="actions">
+        <span class="pr">€48</span>
+      </div>
+      <div class="req-cta">
+        <button class="accept">Confirm</button>
+        <button class="contact">Message</button>
+        <button class="decline">Decline</button>
+      </div>
+    </article>
+
+    <div class="proto-note" style="border-color:rgba(250,246,238,0.2);color:rgba(250,246,238,0.5);">
+      Notifications also fire to Gül's Telegram from @kasexperiences_bot
+    </div>
+  </div>
+</section>
+
+<!-- Bottom tabs -->
+<nav class="tabs" role="tablist" aria-label="Screen switcher">
+  <button class="tab" data-tab="home" aria-current="true">
+    <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.7"><path d="M3 12 12 4l9 8M5 10v10h14V10"/></svg>
+    Home
+  </button>
+  <button class="tab" data-tab="detail">
+    <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.7"><circle cx="12" cy="12" r="9"/><path d="M12 7v6l4 2"/></svg>
+    Activity
+  </button>
+  <button class="tab" data-tab="booking">
+    <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.7"><rect x="4" y="6" width="16" height="14" rx="2"/><path d="M8 4v4M16 4v4M4 11h16"/></svg>
+    Book
+  </button>
+  <button class="tab" data-tab="mybookings">
+    <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.7"><path d="M5 7h14M5 12h14M5 17h9"/></svg>
+    Mine
+  </button>
+  <button class="tab" data-tab="admin">
+    <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.7"><path d="M12 12a4 4 0 1 0 0-8 4 4 0 0 0 0 8ZM4 21c0-4 4-7 8-7s8 3 8 7"/></svg>
+    Gül
+  </button>
+</nav>
+
+<script>
+function go(name) {
+  document.querySelectorAll('.screen').forEach(s => {
+    s.dataset.active = (s.dataset.screen === name) ? 'true' : 'false';
+  });
+  document.querySelectorAll('.tab').forEach(t => {
+    t.setAttribute('aria-current', t.dataset.tab === name ? 'true' : 'false');
+  });
+  window.scrollTo({ top: 0, behavior: 'smooth' });
+}
+document.querySelectorAll('.tab').forEach(t => {
+  t.addEventListener('click', () => go(t.dataset.tab));
+});
+
+// Telegram WebApp init (graceful fallback for browser)
+if (window.Telegram && window.Telegram.WebApp) {
+  try {
+    Telegram.WebApp.ready();
+    Telegram.WebApp.expand();
+  } catch(e) {}
+}
+</script>
+
+</body>
+</html>
